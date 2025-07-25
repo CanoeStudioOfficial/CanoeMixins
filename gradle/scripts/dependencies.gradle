@@ -54,6 +54,12 @@ dependencies {
 
     compileOnly rfg.deobf('com.github.jbredwards:fluidlogged-api:2573e41f3e')
 
+    compileOnly rfg.deobf("curse.maven:railcraft-51195:2687757")
+
+    compileOnly rfg.deobf("curse.maven:tesla-core-lib-254602:3438487")
+    compileOnly rfg.deobf("curse.maven:shadowfacts-forgelin-248453:2785465")
+    compileOnly rfg.deobf("curse.maven:industrialforegoing-266515:2745321")
+
 
     // Example - CurseMaven dependencies:
     // 'curse.maven:had-enough-items-557549:4543375' << had-enough-items = project slug, 557549 = project id, 4543375 = file id

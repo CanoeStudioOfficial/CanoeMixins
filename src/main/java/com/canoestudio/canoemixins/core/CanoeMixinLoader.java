@@ -11,6 +11,8 @@ public class CanoeMixinLoader implements ILateMixinLoader {
         List<String> mixins = new ArrayList<>();
         mixins.add("mixin.canoemixins.biomesoplenty.json");
         mixins.add("mixin.canoemixins.dynamictrees.json");
+        mixins.add("mixin.canoemixins.railcraft.json");
+        mixins.add("mixin.canoemixins.industrialforegoing.json");
 
         return mixins;
     }
