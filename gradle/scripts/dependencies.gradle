@@ -52,7 +52,7 @@ dependencies {
     compileOnly rfg.deobf('curse.maven:BiomesOPlenty-220318:3558882')
     compileOnly rfg.deobf("curse.maven:botania-225643:3330934")
 
-    compileOnly rfg.deobf("com.github.jbredwards:fluidlogged-api:1.12.2-Latest-SNAPSHOT")
+    compileOnly rfg.deobf('com.github.jbredwards:fluidlogged-api:2573e41f3e')
 
 
     // Example - CurseMaven dependencies:
