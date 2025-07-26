@@ -25,7 +25,7 @@ public abstract class BlockDynamicLeaves_CacheMixin extends BlockLeaves {
     public static boolean passableLeavesModLoaded;
 
     @Unique
-    private static final AxisAlignedBB fermiummixins$LEAFAABB = new AxisAlignedBB(0.125, 0.0, 0.125, 0.875, 0.5, 0.875);
+    private static final AxisAlignedBB Canoemixins$LEAFAABB = new AxisAlignedBB(0.125, 0.0, 0.125, 0.875, 0.5, 0.875);
 
     /**
      * @author fonnymunkey
@@ -42,7 +42,7 @@ public abstract class BlockDynamicLeaves_CacheMixin extends BlockLeaves {
         else if(entityIn != null && !(entityIn instanceof EntityFallingTree)) {
             if(!passableLeavesModLoaded && !ModConfigs.vanillaLeavesCollision) {
                 if(!ModConfigs.isLeavesPassable) {
-                    addCollisionBoxToList(pos, entityBox, collidingBoxes, fermiummixins$LEAFAABB);
+                    addCollisionBoxToList(pos, entityBox, collidingBoxes, Canoemixins$LEAFAABB);
                 }
             }
             else {

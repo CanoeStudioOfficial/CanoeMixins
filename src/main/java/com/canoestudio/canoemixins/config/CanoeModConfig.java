@@ -35,7 +35,7 @@ public class CanoeModConfig {
     @Config.Comment("Prints the class names of solid blocks during tree collisions to console" + "\n" +
             "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
     @Config.Name("Debug Tree Collision Names")
-    public boolean treesCollisionNameDebug = false;
+    public static boolean treesCollisionNameDebug = false;
 
     @Config.Comment("List of blocks for falling trees to treat as non-solid when falling" + "\n" +
             "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
@@ -71,7 +71,7 @@ public class CanoeModConfig {
     private HashSet<Block> treeFallingNonSolidBreakableList = null;
     private HashSet<Block> treeFallingSolidBreakableList = null;
 
-    public HashSet<Block> getTreeFallingNonSolidList() {
+    public static HashSet<Block> getTreeFallingNonSolidList() {
         if(this.treeFallingNonSolidList == null) {
             this.treeFallingNonSolidList = new HashSet<>();
             for(String string : this.treeFallingNonSolidBlocks) {
@@ -86,7 +86,7 @@ public class CanoeModConfig {
         return this.treeFallingNonSolidList;
     }
 
-    public HashSet<Block> getTreeFallingNonSolidBreakableList() {
+    public static HashSet<Block> getTreeFallingNonSolidBreakableList() {
         if(this.treeFallingNonSolidBreakableList == null) {
             this.treeFallingNonSolidBreakableList = new HashSet<>();
             for(String string : this.treeFallingNonSolidBreakableBlocks) {
@@ -101,7 +101,7 @@ public class CanoeModConfig {
         return this.treeFallingNonSolidBreakableList;
     }
 
-    public HashSet<Block> getTreeFallingSolidBreakableList() {
+    public static HashSet<Block> getTreeFallingSolidBreakableList() {
         if(this.treeFallingSolidBreakableList == null) {
             this.treeFallingSolidBreakableList = new HashSet<>();
             for(String string : this.treeFallingSolidBreakableBlocks) {

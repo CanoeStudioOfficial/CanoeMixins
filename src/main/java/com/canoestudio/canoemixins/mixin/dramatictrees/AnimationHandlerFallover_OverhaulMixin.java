@@ -37,7 +37,7 @@ public abstract class AnimationHandlerFallover_OverhaulMixin {
     private int fermiummixins$trunkHeight;
 
     /**
-     * @author fonnymunkey
+     * @author lonelyxiya
      * @reason improve tree collision
      */
     @Overwrite(remap = false)
@@ -68,7 +68,7 @@ public abstract class AnimationHandlerFallover_OverhaulMixin {
                 float half = MathHelper.clamp(tex * (float)(segment + 1) * 2.0F, tex, maxRadius);
 
                 //Use default handling
-                if(!CanoeModConfig.enableFallingTreeDomino) {
+                if(!ModConfigs.enableFallingTreeDomino) {
                     AxisAlignedBB testBB = new AxisAlignedBB((double)(segX - half), (double)(segY - half), (double)(segZ - half), (double)(segX + half), (double)(segY + half), (double)(segZ + half));
                     return !entity.world.getCollisionBoxes(entity, testBB).isEmpty();
                 }
