@@ -1,7 +1,6 @@
 package com.canoestudio.canoemixins.config;
 
 import com.canoestudio.canoemixins.CanoeMixins;
-import com.canoestudio.canoemixins.config.mod.DramaticTreesConfig;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
@@ -67,59 +66,59 @@ public class CanoeModConfig {
     public String[] treeFallingSolidBreakableBlocks = {
     };
 
-    private HashSet<Block> treeFallingNonSolidList = null;
-    private HashSet<Block> treeFallingNonSolidBreakableList = null;
-    private HashSet<Block> treeFallingSolidBreakableList = null;
+    private static HashSet<Block> treeFallingNonSolidList = null;
+    private static HashSet<Block> treeFallingNonSolidBreakableList = null;
+    private static HashSet<Block> treeFallingSolidBreakableList = null;
 
     public static HashSet<Block> getTreeFallingNonSolidList() {
-        if(this.treeFallingNonSolidList == null) {
-            this.treeFallingNonSolidList = new HashSet<>();
-            for(String string : this.treeFallingNonSolidBlocks) {
+        if(treeFallingNonSolidList == null) {
+            treeFallingNonSolidList = new HashSet<>();
+            for(String string : treeFallingNonSolidBlocks) {
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string));
                 if(block == null || block == Blocks.AIR) {
                     CanoeMixins.LOGGER.log(Level.WARN, "CanoeMixins DramaticTree Non-Solid list invalid block: " + string + ", ignoring.");
                     continue;
                 }
-                this.treeFallingNonSolidList.add(block);
+                treeFallingNonSolidList.add(block);
             }
         }
-        return this.treeFallingNonSolidList;
+        return treeFallingNonSolidList;
     }
 
     public static HashSet<Block> getTreeFallingNonSolidBreakableList() {
-        if(this.treeFallingNonSolidBreakableList == null) {
-            this.treeFallingNonSolidBreakableList = new HashSet<>();
-            for(String string : this.treeFallingNonSolidBreakableBlocks) {
+        if(treeFallingNonSolidBreakableList == null) {
+            treeFallingNonSolidBreakableList = new HashSet<>();
+            for(String string : treeFallingNonSolidBreakableBlocks) {
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string));
                 if(block == null || block == Blocks.AIR) {
                     CanoeMixins.LOGGER.log(Level.WARN, "CanoeMixins DramaticTree Non-Solid Breakable list invalid block: " + string + ", ignoring.");
                     continue;
                 }
-                this.treeFallingNonSolidBreakableList.add(block);
+                treeFallingNonSolidBreakableList.add(block);
             }
         }
-        return this.treeFallingNonSolidBreakableList;
+        return treeFallingNonSolidBreakableList;
     }
 
     public static HashSet<Block> getTreeFallingSolidBreakableList() {
-        if(this.treeFallingSolidBreakableList == null) {
-            this.treeFallingSolidBreakableList = new HashSet<>();
-            for(String string : this.treeFallingSolidBreakableBlocks) {
+        if(treeFallingSolidBreakableList == null) {
+            treeFallingSolidBreakableList = new HashSet<>();
+            for(String string : treeFallingSolidBreakableBlocks) {
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string));
                 if(block == null || block == Blocks.AIR) {
                     CanoeMixins.LOGGER.log(Level.WARN, "CanoeMixins DramaticTree Solid Breakable list invalid block: " + string + ", ignoring.");
                     continue;
                 }
-                this.treeFallingSolidBreakableList.add(block);
+                treeFallingSolidBreakableList.add(block);
             }
         }
-        return this.treeFallingSolidBreakableList;
+        return treeFallingSolidBreakableList;
     }
 
     public void refreshConfig() {
-        this.treeFallingNonSolidList = null;
-        this.treeFallingNonSolidBreakableList = null;
-        this.treeFallingSolidBreakableList = null;
+        treeFallingNonSolidList = null;
+        treeFallingNonSolidBreakableList = null;
+        treeFallingSolidBreakableList = null;
     }
 
 
