@@ -13,6 +13,7 @@ public class CanoeMixinLoader implements ILateMixinLoader {
         mixins.add("mixin.canoemixins.dynamictrees.json");
         mixins.add("mixin.canoemixins.railcraft.json");
         mixins.add("mixin.canoemixins.industrialforegoing.json");
+        mixins.add("mixin.canoemixins.dramatictrees.json");
 
         return mixins;
     }

@@ -1,13 +1,127 @@
 package com.canoestudio.canoemixins.config;
 
 import com.canoestudio.canoemixins.CanoeMixins;
+import com.canoestudio.canoemixins.config.mod.DramaticTreesConfig;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.LangKey;
 import net.minecraftforge.common.config.Config.Type;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.apache.logging.log4j.Level;
+
+import java.util.HashSet;
 
 @Config(modid = CanoeMixins.MODID,type = Type.INSTANCE,category = "general")
 public class CanoeModConfig {
+
+    @Config.Comment("Disables unnecessary lighting checks on leaves during worldgen for performance")
+    @Config.Name("WorldGen Leaves Lighting Lag Fix (DramaticTrees)")
+    @Config.RequiresMcRestart
+    public boolean worldGenLeavesLighting = false;
+
+    @Config.Comment("Cache leaf and branch AABBs to save on memory allocation usage")
+    @Config.Name("Collision Box Cache (DramaticTrees)")
+    @Config.RequiresMcRestart
+    public boolean collisionBoxCache = false;
+
+    @Config.Comment("Overhauls tree falling such as making volume dependant on speed/size and allowing for passing through or breaking additional blocks")
+    @Config.Name("Tree Falling Overhaul (DramaticTrees)")
+    @Config.RequiresMcRestart
+    public boolean treeFallingOverhaul = false;
+
+    @Config.Comment("Prints the class names of solid blocks during tree collisions to console" + "\n" +
+            "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
+    @Config.Name("Debug Tree Collision Names")
+    public boolean treesCollisionNameDebug = false;
+
+    @Config.Comment("List of blocks for falling trees to treat as non-solid when falling" + "\n" +
+            "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
+    @Config.Name("Tree Falling Non-Solid Blocks")
+    public String[] treeFallingNonSolidBlocks = {
+            "dynamictrees:leaves0",
+            "minecraft:leaves",
+            "minecraft:vine",
+            "minecraft:double_plant",
+            "minecraft:tallgrass",
+            "notreepunching:loose_rock/stone",
+            "notreepunching:loose_rock/sandstone"
+    };
+
+    @Config.Comment("List of blocks from the non-solid list for falling trees to break while falling" + "\n" +
+            "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
+    @Config.Name("Tree Falling Non-Solid Breakable Blocks")
+    public String[] treeFallingNonSolidBreakableBlocks = {
+            "dynamictrees:leaves0",
+            "minecraft:leaves",
+            "minecraft:vine",
+            "minecraft:double_plant",
+            "minecraft:tallgrass"
+    };
+
+    @Config.Comment("List of blocks for falling trees to treat as solid but still break while falling" + "\n" +
+            "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
+    @Config.Name("Tree Falling Solid Breakable Blocks")
+    public String[] treeFallingSolidBreakableBlocks = {
+    };
+
+    private HashSet<Block> treeFallingNonSolidList = null;
+    private HashSet<Block> treeFallingNonSolidBreakableList = null;
+    private HashSet<Block> treeFallingSolidBreakableList = null;
+
+    public HashSet<Block> getTreeFallingNonSolidList() {
+        if(this.treeFallingNonSolidList == null) {
+            this.treeFallingNonSolidList = new HashSet<>();
+            for(String string : this.treeFallingNonSolidBlocks) {
+                Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string));
+                if(block == null || block == Blocks.AIR) {
+                    CanoeMixins.LOGGER.log(Level.WARN, "CanoeMixins DramaticTree Non-Solid list invalid block: " + string + ", ignoring.");
+                    continue;
+                }
+                this.treeFallingNonSolidList.add(block);
+            }
+        }
+        return this.treeFallingNonSolidList;
+    }
+
+    public HashSet<Block> getTreeFallingNonSolidBreakableList() {
+        if(this.treeFallingNonSolidBreakableList == null) {
+            this.treeFallingNonSolidBreakableList = new HashSet<>();
+            for(String string : this.treeFallingNonSolidBreakableBlocks) {
+                Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string));
+                if(block == null || block == Blocks.AIR) {
+                    CanoeMixins.LOGGER.log(Level.WARN, "CanoeMixins DramaticTree Non-Solid Breakable list invalid block: " + string + ", ignoring.");
+                    continue;
+                }
+                this.treeFallingNonSolidBreakableList.add(block);
+            }
+        }
+        return this.treeFallingNonSolidBreakableList;
+    }
+
+    public HashSet<Block> getTreeFallingSolidBreakableList() {
+        if(this.treeFallingSolidBreakableList == null) {
+            this.treeFallingSolidBreakableList = new HashSet<>();
+            for(String string : this.treeFallingSolidBreakableBlocks) {
+                Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string));
+                if(block == null || block == Blocks.AIR) {
+                    CanoeMixins.LOGGER.log(Level.WARN, "CanoeMixins DramaticTree Solid Breakable list invalid block: " + string + ", ignoring.");
+                    continue;
+                }
+                this.treeFallingSolidBreakableList.add(block);
+            }
+        }
+        return this.treeFallingSolidBreakableList;
+    }
+
+    public void refreshConfig() {
+        this.treeFallingNonSolidList = null;
+        this.treeFallingNonSolidBreakableList = null;
+        this.treeFallingSolidBreakableList = null;
+    }
+
 
     @LangKey("config.canoemixins.railcraft.name")
     public static CategoryRailcraft railcraft = new CategoryRailcraft();
@@ -37,7 +151,7 @@ public class CanoeModConfig {
         @Config.RequiresMcRestart
         @Comment({"Add a timeout when it's retrieving info for some mods, prevent it from sticking the loading progress forever on a lossy internet connection.",
                 "Set to 0 for infinite timeout."})
-        @LangKey("config.mtepatches.connectionTimeout.timeout.name")
+        @LangKey("config.canoemixins.connectionTimeout.timeout.name")
         @Config.RangeInt(min = 0)
         public int timeout = 5000;
 
@@ -46,5 +160,7 @@ public class CanoeModConfig {
         @Comment({"Enable timeout for Industrial Foregoing when it's checking contributors."})
         public boolean industrialForegoing = true;
     }
+
+
 
 }

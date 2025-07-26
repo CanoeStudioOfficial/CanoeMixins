@@ -1,0 +1,16 @@
+{
+  "package": "com.canoestudio.canoemixins.mixin.dramatictrees",
+  "required": true,
+  "refmap": "mixins.canoemixins.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8.5",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "AnimationHandlerFallover_OverhaulMixin",
+    "BlockBranchBasic_CacheMixin",
+    "BlockDynamicLeaves_CacheMixin",
+    "BlockDynamicLeaves_LightingMixin"
+  ],
+  "server": [],
+  "client": []
+}

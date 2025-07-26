@@ -10,7 +10,8 @@
     "MixinBlockCoral",
     "MixinBlockFlower",
     "MixinBlockQuery",
-    "MixinBlockSeaweed"
+    "MixinBlockSeaweed",
+    "MixinTrailManager"
   ],
   "server": [],
   "client": []

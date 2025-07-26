@@ -47,7 +47,6 @@ dependencies {
     // By wrapping a dependency descriptor in rfg.deobf() method call, the dependency is queued for deobfuscation
     // When deobfuscating, RFG respects the mapping_channel + mapping_version stated in gradle.properties
     compileOnly rfg.deobf('curse.maven:SimpleDifficultyForUnderdog-574162:4651150')
-    compileOnly rfg.deobf('curse.maven:DynamicTrees-252818:3812473')
     compileOnly rfg.deobf('curse.maven:DynamicTreesBOP-289529:4586993')
     compileOnly rfg.deobf('curse.maven:BiomesOPlenty-220318:3558882')
     compileOnly rfg.deobf("curse.maven:botania-225643:3330934")
@@ -59,6 +58,7 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:tesla-core-lib-254602:3438487")
     compileOnly rfg.deobf("curse.maven:shadowfacts-forgelin-248453:2785465")
     compileOnly rfg.deobf("curse.maven:industrialforegoing-266515:2745321")
+    compileOnly rfg.deobf("curse.maven:dramatictrees-637540:5496154")
 
 
     // Example - CurseMaven dependencies:
