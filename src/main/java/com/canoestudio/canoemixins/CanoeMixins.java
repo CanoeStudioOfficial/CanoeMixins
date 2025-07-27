@@ -1,7 +1,5 @@
 package com.canoestudio.canoemixins;
 
-
-
 import com.canoestudio.canoemixins.core.LoadedModChecker;
 import com.canoestudio.canoemixins.modbugfix.railcraft.RCMultiblockPatch;
 import net.minecraftforge.common.MinecraftForge;
@@ -36,5 +34,8 @@ public class CanoeMixins {
     public static void logInfo(String log){
         logger.info(log);
     }
+
+
+
 
 }
