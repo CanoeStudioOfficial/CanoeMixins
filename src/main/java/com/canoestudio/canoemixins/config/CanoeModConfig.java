@@ -16,18 +16,7 @@ import java.util.HashSet;
 @Config(modid = CanoeMixins.MODID,type = Type.INSTANCE,category = "general")
 public class CanoeModConfig {
 
-    @LangKey("config.canoemixins.kleeslabs.name")
-    public static CategoryKleeslabs kleeslabs = new CategoryKleeslabs();
 
-    public static class CategoryKleeslabs {
-        @Comment("Set this to true to only break half a slab when the player is sneaking.")
-        @LangKey("config.canoemixins.kleeslabs.requireSneak.name")
-        public boolean requireSneak = false;
-
-        @Comment("If Require Sneaking is enabled, set this to true to invert the sneaking check.")
-        @LangKey("config.canoemixins.kleeslabs.invertSneak.name")
-        public boolean invertSneak = false;
-    }
 
     @Config.Comment("Disables unnecessary lighting checks on leaves during worldgen for performance")
     @Config.Name("WorldGen Leaves Lighting Lag Fix (DramaticTrees)")
