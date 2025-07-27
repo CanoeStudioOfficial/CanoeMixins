@@ -19,17 +19,17 @@ public class CanoeModConfig {
     @Config.Comment("Disables unnecessary lighting checks on leaves during worldgen for performance")
     @Config.Name("WorldGen Leaves Lighting Lag Fix (DramaticTrees)")
     @Config.RequiresMcRestart
-    public boolean worldGenLeavesLighting = false;
+    public static boolean worldGenLeavesLighting = false;
 
     @Config.Comment("Cache leaf and branch AABBs to save on memory allocation usage")
     @Config.Name("Collision Box Cache (DramaticTrees)")
     @Config.RequiresMcRestart
-    public boolean collisionBoxCache = false;
+    public static boolean collisionBoxCache = false;
 
     @Config.Comment("Overhauls tree falling such as making volume dependant on speed/size and allowing for passing through or breaking additional blocks")
     @Config.Name("Tree Falling Overhaul (DramaticTrees)")
     @Config.RequiresMcRestart
-    public boolean treeFallingOverhaul = false;
+    public static boolean treeFallingOverhaul = false;
 
     @Config.Comment("Prints the class names of solid blocks during tree collisions to console" + "\n" +
             "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
@@ -39,7 +39,7 @@ public class CanoeModConfig {
     @Config.Comment("List of blocks for falling trees to treat as non-solid when falling" + "\n" +
             "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
     @Config.Name("Tree Falling Non-Solid Blocks")
-    public String[] treeFallingNonSolidBlocks = {
+    public static String[] treeFallingNonSolidBlocks = {
             "dynamictrees:leaves0",
             "minecraft:leaves",
             "minecraft:vine",
@@ -52,7 +52,7 @@ public class CanoeModConfig {
     @Config.Comment("List of blocks from the non-solid list for falling trees to break while falling" + "\n" +
             "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
     @Config.Name("Tree Falling Non-Solid Breakable Blocks")
-    public String[] treeFallingNonSolidBreakableBlocks = {
+    public static String[] treeFallingNonSolidBreakableBlocks = {
             "dynamictrees:leaves0",
             "minecraft:leaves",
             "minecraft:vine",
@@ -63,8 +63,7 @@ public class CanoeModConfig {
     @Config.Comment("List of blocks for falling trees to treat as solid but still break while falling" + "\n" +
             "Requires \"Tree Falling Overhaul (DramaticTrees)\" enabled")
     @Config.Name("Tree Falling Solid Breakable Blocks")
-    public String[] treeFallingSolidBreakableBlocks = {
-    };
+    public static String[] treeFallingSolidBreakableBlocks = {};
 
     private static HashSet<Block> treeFallingNonSolidList = null;
     private static HashSet<Block> treeFallingNonSolidBreakableList = null;
@@ -115,7 +114,7 @@ public class CanoeModConfig {
         return treeFallingSolidBreakableList;
     }
 
-    public void refreshConfig() {
+    public static void refreshConfig() {
         treeFallingNonSolidList = null;
         treeFallingNonSolidBreakableList = null;
         treeFallingSolidBreakableList = null;
