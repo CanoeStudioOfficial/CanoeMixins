@@ -60,6 +60,8 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:industrialforegoing-266515:2745321")
     compileOnly rfg.deobf("curse.maven:dramatictrees-637540:5496154")
 
+    compileOnly rfg.deobf("curse.maven:forestry-59751:6450115")
+
 
     // Example - CurseMaven dependencies:
     // 'curse.maven:had-enough-items-557549:4543375' << had-enough-items = project slug, 557549 = project id, 4543375 = file id

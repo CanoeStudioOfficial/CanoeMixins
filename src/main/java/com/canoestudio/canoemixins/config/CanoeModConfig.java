@@ -146,6 +146,23 @@ public class CanoeModConfig {
         public boolean fixConveyorInsertionDuplication = true;
     }
 
+    @LangKey("config.canoemixins.forestry.name")
+    public static CategoryForestry forestry = new CategoryForestry();
+    public static class CategoryForestry{
+        @Comment({"Prevent faulty bee queen without mated tag from crashing the server when put into beekeeping.",
+                "They will be replaced with a princess with the same NBT."})
+        @LangKey("config.canoemixins.forestry.faultyQueenFix.name")
+        public boolean faultyQueenFix = true;
+        @Comment({"Fix multi-farm does not return dirt or sand when replacing soil."})
+        @LangKey("config.canoemixins.forestry.multiFarmSoilReplaceFix.name")
+        public boolean multiFarmSoilReplaceFix = true;
+
+        @Config.RequiresMcRestart
+        @Comment({"Remove Buildcraft version check for the compat modules. Fixes the module not loading with BC 8.0."})
+        @LangKey("config.canoemixins.forestry.bc8Compat.name")
+        public boolean bc8Compat = true;
+    }
+
     public static CategoryConnectionTimeout connectionTimeout = new CategoryConnectionTimeout();
     public static class CategoryConnectionTimeout{
         @Config.RequiresMcRestart
