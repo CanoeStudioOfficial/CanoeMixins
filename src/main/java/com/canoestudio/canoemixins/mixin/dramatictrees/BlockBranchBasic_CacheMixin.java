@@ -1,5 +1,6 @@
 package com.canoestudio.canoemixins.mixin.dramatictrees;
 
+import com.canoestudio.canoemixins.config.CanoeModConfig;
 import com.ferreusveritas.dynamictrees.blocks.BlockBranch;
 import com.ferreusveritas.dynamictrees.blocks.BlockBranchBasic;
 import com.ferreusveritas.dynamictrees.entities.EntityFallingTree;
@@ -32,15 +33,14 @@ public abstract class BlockBranchBasic_CacheMixin extends BlockBranch {
     private static final AxisAlignedBB[][] fermiummixins$cbAABBarray = new AxisAlignedBB[8][7];
 
     static {
-        for(int r = 0; r < 8; r++) {//Technically thick branches have a bigger radius, but anything over 8 is handled separately
+        for(int r = 0; r < 8; r++) {
             double radius = (double)(r+1) / 16.0;
             double gap = 0.5 - radius;
 
-            //bb array
             for(int i = 0; i < 64; i++) {
                 boolean[] bool = new boolean[6];
                 for(int j = 0; j < 6; j++) {
-                    bool[j] = (i >> j & 1) != 0;//me when permutation
+                    bool[j] = (i >> j & 1) != 0;
                 }
                 AxisAlignedBB aabb = new AxisAlignedBB(0.5 - radius, 0.5 - radius, 0.5 - radius, 0.5 + radius, 0.5 + radius, 0.5 + radius);
                 for(EnumFacing dir : EnumFacing.VALUES) {
@@ -51,12 +51,10 @@ public abstract class BlockBranchBasic_CacheMixin extends BlockBranch {
                 fermiummixins$bbAABBarray[r][i] = aabb;
             }
 
-            //cb array
             for(EnumFacing dir : EnumFacing.VALUES) {
                 AxisAlignedBB aabb = new AxisAlignedBB(0.5 - radius, 0.5 - radius, 0.5 - radius, 0.5 + radius, 0.5 + radius, 0.5 + radius);
                 fermiummixins$cbAABBarray[r][dir.getIndex()] = aabb.expand((double)dir.getXOffset() * gap, (double)dir.getYOffset() * gap, (double)dir.getZOffset() * gap);
             }
-            //No connections
             fermiummixins$cbAABBarray[r][6] = new AxisAlignedBB(0.5 - radius, 0.5 - radius, 0.5 - radius, 0.5 + radius, 0.5 + radius, 0.5 + radius);
         }
     }
@@ -71,6 +69,10 @@ public abstract class BlockBranchBasic_CacheMixin extends BlockBranch {
      */
     @Overwrite
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess blockAccess, BlockPos pos) {
+        if (!CanoeModConfig.collisionBoxCache) {
+            return super.getBoundingBox(state, blockAccess, pos);
+        }
+
         if(state.getBlock() != this) return NULL_AABB;
         else {
             int thisRadius = this.getRadius(state);
@@ -96,6 +98,11 @@ public abstract class BlockBranchBasic_CacheMixin extends BlockBranch {
      */
     @Overwrite
     public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean p_185477_7_) {
+        if (!CanoeModConfig.collisionBoxCache) {
+            super.addCollisionBoxToList(state, world, pos, entityBox, collidingBoxes, entityIn, p_185477_7_);
+            return;
+        }
+
         if(!(entityIn instanceof EntityFallingTree)) {
             int thisRadius = this.getRadius(state);
             boolean hasCon = false;

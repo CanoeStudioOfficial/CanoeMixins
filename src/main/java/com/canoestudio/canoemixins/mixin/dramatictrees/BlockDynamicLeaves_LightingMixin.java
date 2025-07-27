@@ -1,5 +1,6 @@
 package com.canoestudio.canoemixins.mixin.dramatictrees;
 
+import com.canoestudio.canoemixins.config.CanoeModConfig;
 import com.ferreusveritas.dynamictrees.api.treedata.ILeavesProperties;
 import com.ferreusveritas.dynamictrees.blocks.BlockDynamicLeaves;
 import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
@@ -27,6 +28,7 @@ public abstract class BlockDynamicLeaves_LightingMixin {
             remap = false
     )
     private void fermiummixins_dynamicTreesBlockDynamicLeaves_age(World world, BlockPos pos, IBlockState state, Random rand, SafeChunkBounds safeBounds, CallbackInfoReturnable<Integer> cir) {
+        if (!CanoeModConfig.worldGenLeavesLighting) return;
         this.canoemixins$worldGen = safeBounds != SafeChunkBounds.ANY;
     }
 
@@ -36,6 +38,7 @@ public abstract class BlockDynamicLeaves_LightingMixin {
             remap = false
     )
     private void fermiummixins_dynamicTreesBlockDynamicLeaves_age_return(World world, BlockPos pos, IBlockState state, Random rand, SafeChunkBounds safeBounds, CallbackInfoReturnable<Integer> cir) {
+        if (!CanoeModConfig.worldGenLeavesLighting) return;
         this.canoemixins$worldGen = false;
     }
 
@@ -45,6 +48,9 @@ public abstract class BlockDynamicLeaves_LightingMixin {
             remap = false
     )
     private boolean fermiummixins_dynamicTreesBlockDynamicLeaves_isLocationSuitableForNewLeaves(BlockDynamicLeaves instance, IBlockState blockState, World world, ILeavesProperties leavesProperties, BlockPos pos) {
+        if (!CanoeModConfig.worldGenLeavesLighting) {
+            return instance.hasAdequateLight(blockState, world, leavesProperties, pos);
+        }
         return this.canoemixins$worldGen || instance.hasAdequateLight(blockState, world, leavesProperties, pos);
     }
 }

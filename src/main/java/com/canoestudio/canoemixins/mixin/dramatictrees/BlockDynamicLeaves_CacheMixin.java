@@ -1,5 +1,6 @@
 package com.canoestudio.canoemixins.mixin.dramatictrees;
 
+import com.canoestudio.canoemixins.config.CanoeModConfig;
 import com.ferreusveritas.dynamictrees.ModConfigs;
 import com.ferreusveritas.dynamictrees.blocks.BlockDynamicLeaves;
 import com.ferreusveritas.dynamictrees.entities.EntityFallingTree;
@@ -33,6 +34,11 @@ public abstract class BlockDynamicLeaves_CacheMixin extends BlockLeaves {
      */
     @Overwrite
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean unknown) {
+        if (!CanoeModConfig.collisionBoxCache) {
+            super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, unknown);
+            return;
+        }
+
         if(entityIn instanceof EntityItem) {
             EntityItem item = (EntityItem)entityIn;
             if(!(item.getItem().getItem() instanceof Seed)) {

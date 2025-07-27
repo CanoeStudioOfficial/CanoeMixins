@@ -42,6 +42,38 @@ public abstract class AnimationHandlerFallover_OverhaulMixin {
      */
     @Overwrite(remap = false)
     private boolean testCollision(EntityFallingTree entity) {
+        if (!CanoeModConfig.treeFallingOverhaul) {
+            // 使用原版碰撞检测逻辑
+            EnumFacing toolDir = entity.getDestroyData().toolDir;
+            float actingAngle = toolDir.getAxis() == EnumFacing.Axis.X ? entity.rotationYaw : entity.rotationPitch;
+            int offsetX = toolDir.getXOffset();
+            int offsetZ = toolDir.getZOffset();
+            float h = MathHelper.sin((float)Math.toRadians((double)actingAngle)) * (float)(offsetX | offsetZ);
+            float v = MathHelper.cos((float)Math.toRadians((double)actingAngle));
+            float xbase = (float)(entity.posX + (double)((float)offsetX * (-0.5F + v * 0.5F + h * 0.5F)));
+            float ybase = (float)(entity.posY - (double)(h * 0.5F) + (double)(v * 0.5F));
+            float zbase = (float)(entity.posZ + (double)((float)offsetZ * (-0.5F + v * 0.5F + h * 0.5F)));
+            float maxRadius = (float)entity.getDestroyData().getBranchRadius(0) / 16.0F;
+            int segmentHeight = Math.min(entity.getDestroyData().trunkHeight, 24);
+
+            for(int segment = 0; segment < segmentHeight; ++segment) {
+                float segX = xbase + h * (float)segment * (float)offsetX;
+                float segY = ybase + v * (float)segment;
+                float segZ = zbase + h * (float)segment * (float)offsetZ;
+                float tex = 0.0625F;
+                float half = MathHelper.clamp(tex * (float)(segment + 1) * 2.0F, tex, maxRadius);
+                AxisAlignedBB testBB = new AxisAlignedBB(
+                        (double)(segX - half), (double)(segY - half), (double)(segZ - half),
+                        (double)(segX + half), (double)(segY + half), (double)(segZ + half)
+                );
+                if (!entity.world.getCollisionBoxes(entity, testBB).isEmpty()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // 以下是优化后的碰撞检测逻辑
         BlockPos.PooledMutableBlockPos pooledPos = BlockPos.PooledMutableBlockPos.retain();
         try {
             EnumFacing toolDir = entity.getDestroyData().toolDir;
@@ -57,7 +89,6 @@ public abstract class AnimationHandlerFallover_OverhaulMixin {
             float maxRadius = (float)entity.getDestroyData().getBranchRadius(0) / 16.0F;
             int segmentHeight = Math.min(trunkHeight, 24);
 
-            //Iterate segments upwards
             for(int segment = 0; segment < segmentHeight; segment++) {
                 int solidBlock = 0;
 
@@ -67,7 +98,6 @@ public abstract class AnimationHandlerFallover_OverhaulMixin {
                 float tex = 0.0625F;
                 float half = MathHelper.clamp(tex * (float)(segment + 1) * 2.0F, tex, maxRadius);
 
-                //Use default handling
                 if(!ModConfigs.enableFallingTreeDomino) {
                     AxisAlignedBB testBB = new AxisAlignedBB((double)(segX - half), (double)(segY - half), (double)(segZ - half), (double)(segX + half), (double)(segY + half), (double)(segZ + half));
                     return !entity.world.getCollisionBoxes(entity, testBB).isEmpty();
@@ -80,26 +110,21 @@ public abstract class AnimationHandlerFallover_OverhaulMixin {
                 int j3 = MathHelper.floor(segZ - half);
                 int k3 = MathHelper.ceil(segZ + half);
 
-                //Iterate possible colliding blocks
                 for(int l3 = j2; l3 < k2; ++l3) {
                     for(int i4 = l2; i4 < i3; ++i4) {
                         for(int j4 = j3; j4 < k3; ++j4) {
                             IBlockState collBlockState = entity.world.getBlockState(pooledPos.setPos(l3, i4, j4));
                             if(collBlockState.getMaterial() != Material.AIR) {
                                 Block collBlock = collBlockState.getBlock();
-                                //Ignore BlockTrunkShell as they are not removed before the tree is fully gone
                                 if(collBlock instanceof BlockTrunkShell) {
                                     continue;
                                 }
 
-                                //Handle branches separately
                                 if(TreeHelper.isBranch(collBlock)) {
-                                    //If branch is thin, break through it
                                     if(((BlockBranch)collBlock).getRadius(collBlockState) < 3) {
                                         entity.world.destroyBlock(pooledPos.toImmutable(), false);
                                         continue;
                                     }
-                                    //If branch isn't thin and tree is tall enough, check for domino
                                     else if(trunkHeight > 4) {
                                         BlockPos dominoPos = ModConfigs.treeStumping ? TreeHelper.findRootNode(entity.world, pooledPos).up(2) : TreeHelper.findRootNode(entity.world, pooledPos).up();
 
@@ -110,7 +135,6 @@ public abstract class AnimationHandlerFallover_OverhaulMixin {
                                             dominoTrunkHeight++;
                                         }
 
-                                        //If falling tree height is greater than or equal to hit tree, domino, otherwise solid
                                         if(trunkHeight >= dominoTrunkHeight) {
                                             if(!entity.world.isRemote) ((BlockBranch)collBlock).dominoBreak(entity.world, dominoPos, toolDir);
                                         }
