@@ -29,6 +29,10 @@ repositories {
         name 'JitPack'
         url 'https://jitpack.io'
     }
+    maven {
+        name 'Hileb'
+        url 'https://ecdcaeb.github.io/maven/'
+    }
     mavenLocal() // Must be last for caching to work
 }
 
@@ -61,6 +65,8 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:dramatictrees-637540:5496154")
 
     compileOnly rfg.deobf("curse.maven:forestry-59751:6450115")
+
+    compileOnly rfg.deobf("net.optifine:optifine:1.12.2-HD_U_G5_unpatched_srg")
 
 
     // Example - CurseMaven dependencies:
