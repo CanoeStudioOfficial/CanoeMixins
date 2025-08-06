@@ -16,6 +16,7 @@ public class CanoeMixinLoader implements ILateMixinLoader {
         mixins.add("mixin.canoemixins.dramatictrees.json");
         mixins.add("mixin.canoemixins.forestry.json");
         mixins.add("mixin.canoemixins.durability.json");
+        mixins.add("mixin.canoemixins.optifinecitpatch.json");
 
         return mixins;
     }
