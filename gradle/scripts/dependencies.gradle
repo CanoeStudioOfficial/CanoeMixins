@@ -66,7 +66,6 @@ dependencies {
 
     compileOnly rfg.deobf("curse.maven:forestry-59751:6450115")
 
-    compileOnly rfg.deobf("net.optifine:optifine:1.12.2-HD_U_G5_unpatched_srg")
 
 
     // Example - CurseMaven dependencies:

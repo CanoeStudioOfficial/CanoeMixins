@@ -1,5 +1,5 @@
 {
-	"package": "",
+	"package": "com.canoestudio.canoemixins.mixin",
 	"required": true,
 	"refmap": "mixins.canoemixins.refmap.json",
 	"target": "@env(DEFAULT)",
